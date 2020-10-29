@@ -8,10 +8,10 @@ def bash(command):
 
 
 def delete():
-    file = os.path.abspath(os.curdir) + '/' + input("Press Enter file name for deleting: ")
+    file = input("Press Enter file name for deleting: ")
 
-    if not os.path.exists(file):
-        print(f'File: {file} not exist')
+    if file == '':
+        print(f'File name is empty not exist')
         exit()
     bash(f'git rm {file}')
 
@@ -38,7 +38,6 @@ print("Path for Git:", directory)
 print("-"*100)
 bash('git status')
 print("-"*100)
-
 
 if len(sys.argv) == 2 and sys.argv[1] =='del':
     delete()
