@@ -7,9 +7,12 @@ def bash(command):
     os.system(command)
 
 
-def delete(file):
+def delete():
+    file = input("Press Enter file name for deleting")
+    if file == '' or not os.path.exists(file):
+        print(f'File: {file} not exist')
+        exit()
     bash(f'git rm {file}')
-
 
 def add():
     if input("Press Enter for continue 'git add *'  or Any key for exit") != "":
@@ -34,8 +37,8 @@ print("-"*100)
 bash('git status')
 print("-"*100)
 
-if len(sys.argv) == 2:
-    delete(sys.argv[1])
+if len(sys.argv) == 2 and sys.argv[1] =='del':
+    delete()
 else:
     add()
 
