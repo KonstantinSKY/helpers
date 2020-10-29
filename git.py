@@ -7,8 +7,8 @@ def bash(command):
     os.system(command)
 
 
-def delete():
-    pass
+def delete(file):
+    bash(f'git rm {file}')
 
 
 def add():
@@ -22,7 +22,7 @@ def commit():
     print("Commiting and Pushing")
     msg = input("Enter commit message 'git commit -m' \n")
     if msg == "":
-        bash(f'git commit -m NO MESSAGE')
+        bash('git commit -m NO MESSAGE')
     else:
         bash(f'git commit -m "{msg}"')
 
@@ -35,7 +35,7 @@ bash('git status')
 print("-"*100)
 
 if len(sys.argv) == 2:
-    delete()
+    delete(sys.argv[1])
 else:
     add()
 
