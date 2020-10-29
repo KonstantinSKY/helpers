@@ -8,7 +8,7 @@ def bash(command):
 
 
 def delete():
-    file = os.path.abspath(os.curdir) + input("Press Enter file name for deleting: ")
+    file = os.path.abspath(os.curdir) + '/' + input("Press Enter file name for deleting: ")
 
     if not os.path.exists(file):
         print(f'File: {file} not exist')
