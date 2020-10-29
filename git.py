@@ -14,22 +14,27 @@ def delete():
         print(f'File name is empty not exist')
         exit()
     bash(f'git rm {file}')
+    commit(file)
 
 
 def add():
     if input("Press Enter for continue 'git add *'  or Any key for exit") != "":
         exit()
     bash('git add *')
+    commit()
 
 
-def commit():
+def commit(msg=None):
     bash('git status')
     print("Commiting and Pushing")
-    msg = input("Enter commit message 'git commit -m' \n")
-    if msg == "":
-        bash('git commit -m NO MESSAGE')
+    if msg is None:
+        msg = input("Enter commit message 'git commit -m' \n")
+        if msg == "":
+            bash('git commit -m NO MESSAGE')
+        else:
+            bash(f'git commit -m "{msg}"')
     else:
-        bash(f'git commit -m "{msg}"')
+        bash(f'git commit -m "Deleting file: {msg}"')
 
 
 print(" -=GIT helper=-")
@@ -39,12 +44,11 @@ print("-"*100)
 bash('git status')
 print("-"*100)
 
-if len(sys.argv) == 2 and sys.argv[1] =='del':
+if len(sys.argv) == 2 and sys.argv[1] == 'del':
     delete()
 else:
     add()
 
-commit()
 bash('git push')
 bash('git status')
 
