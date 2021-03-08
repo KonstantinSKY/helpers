@@ -1,6 +1,6 @@
 import os
 import sys
-
+import subprocess
 
 def bash(command):
     print('\033[92m '+command+"\033[0m")
@@ -41,9 +41,16 @@ print("-"*100)
 print(" -= GIT helper =-")
 directory = os.path.abspath(os.curdir)
 print("Path for Git:", directory)
-
-
 print("-" * 100)
+# bash('git status')
+
+p = str(subprocess.check_output("git status", shell=True))
+# p = subprocess.run(["git", "status"], stdout=True)
+# sas = p.stdout.split()
+# print(sas)
+print(type(p))
+
+print(p.split("\n"))
 
 print("-" * 100)
 
@@ -51,6 +58,7 @@ if len(sys.argv) == 2 and sys.argv[1] == 'del':
     delete()
 else:
     add()
+
 
 bash('git push')
 bash('git status')
