@@ -37,12 +37,15 @@ def commit(msg=None):
         bash(f'git commit -m "Deleting file: {msg}"')
 
 
-print(" -=GIT helper=-")
+print("-"*100)
+print(" -= GIT helper =-")
 directory = os.path.abspath(os.curdir)
 print("Path for Git:", directory)
-print("-"*100)
-bash('git status')
-print("-"*100)
+
+
+print("-" * 100)
+
+print("-" * 100)
 
 if len(sys.argv) == 2 and sys.argv[1] == 'del':
     delete()
