@@ -43,14 +43,13 @@ directory = os.path.abspath(os.curdir)
 print("Path for Git:", directory)
 print("-" * 100)
 # bash('git status')
+n = r'\ '
+p = str(subprocess.check_output("git status", shell=True)).lstrip("'b/'").replace("\\n", "\n").replace("\\t", "\t").\
+    replace("\\", " ")
 
-p = str(subprocess.check_output("git status", shell=True))
-# p = subprocess.run(["git", "status"], stdout=True)
-# sas = p.stdout.split()
-# print(sas)
 print(type(p))
 
-print(p.split("\n"))
+print(p)
 
 print("-" * 100)
 
