@@ -1,0 +1,15 @@
+#my aliases
+alias ali="nano /home/sky/.bashrc"
+alias prjs="cd /home/sky/Projects"
+alias mw="cd /home/sky/mywork/"
+alias commit="python3 /home/sky/Projects/helpers/git.py"
+alias gitdel="python3 /home/sky/Projects/helpers/git.py del"
+
+#alias jup="jupyter notebook"
+#alias runserv="python3 manage.py runserver"
+#alias activate="source venv/bin/activate"
+#alias skyman="cd /home/sky/Projects/skyman"
+#alias jup="jupyter notebook"
+#alias pg="cd /home/sky/Projects/playground"
+#alias sb="cd /home/sky/Projects/skybot"
+#end my aliases
