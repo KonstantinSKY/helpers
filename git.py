@@ -45,9 +45,8 @@ print("-" * 100)
 # bash('git status')
 
 p = str(subprocess.check_output("git status", shell=True)).lstrip("'b/'").rstrip("'")
-print(p)
 if p.find("working tree clean") >= 0:
-    print("WORKING TREE IS CLEAN!! QUIT")
+    print(p, "WORKING TREE IS CLEAN!! QUIT")
     quit()
 
 p = p.replace("\\n", "\n").replace("\\t", "\t").replace("\\'", "\'")
