@@ -42,15 +42,14 @@ print(" -= GIT helper =-")
 directory = os.path.abspath(os.curdir)
 print("Path for Git:", directory)
 print("-" * 100)
-# bash('git status')
 
-p = str(subprocess.check_output("git status", shell=True)).lstrip("'b/'").rstrip("'")
+p = str(subprocess.check_output("git status", shell=True)).lstrip("'b/'").rstrip("'").replace("\\n", "\n")\
+    .replace("\\t", "\t").replace("\\'", "\'")
+print(p)
 if p.find("working tree clean") >= 0:
-    print(p, "WORKING TREE IS CLEAN!! QUIT")
+    print("WORKING TREE IS CLEAN!! QUIT")
     quit()
 
-p = p.replace("\\n", "\n").replace("\\t", "\t").replace("\\'", "\'")
-print(p)
 print("-" * 100)
 
 if len(sys.argv) == 2 and sys.argv[1] == 'del':
