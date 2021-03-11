@@ -33,7 +33,7 @@ def commit(msg=None):
     if msg is None:
         msg = input("Enter commit message 'git commit -m' \n")
         if msg == "":
-            bash('git commit -m NO MESSAGE')
+            bash('git commit -m "NO MESSAGE"')
         else:
             bash(f'git commit -m "{msg}"')
     else:
