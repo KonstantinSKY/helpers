@@ -8,7 +8,7 @@ os.system('pip install --upgrade pip')
 with open('needed', 'r') as file:
     modules = file.read().split('\n')
 
-modules = list(filter(lambda x: x != "" and x.isspace, modules))
+modules = list(filter(lambda x: x != "" and x != " " and x.isspace, modules))
 input(f'Will be installed next modules:  {modules}')
 
 for module in modules:
