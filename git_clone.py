@@ -27,6 +27,7 @@ directory = os.getcwd() + link[link.find('/'):-4]
 print(f'\nWill be created new and working directory: {directory}')
 if os.path.exists(directory):
     input(f'{directory} is exists. It will be rename to {directory}_old. Push any key to confirm')
+    print(f'\nRenaming {directory}...', link)
     os.rename(directory, directory+'_old')
     print('\nRenamed...', link)
 
