@@ -22,7 +22,7 @@ else:
     print("Link not found in list !!!\n")
     link = input('Enter the SSH link of repository and PUSH any key...\n')
 
-print('\n Your choice is: ', link)
+print('\n Your choice is:', link)
 directory = os.getcwd() + link[link.find('/'):-4]
 print(f'\nWill be created new and working directory: {directory}')
 if os.path.exists(directory):
