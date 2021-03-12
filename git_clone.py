@@ -4,12 +4,6 @@ import os
 print('\n -= Util for git clone and add necessary files =- \n')
 print(f'Working directory will be created right here:{os.getcwd()}\n')
 
-# os.system(f'git clone {link}')
-#
-# print("Done")
-# print('copying .gitignore file...')
-# shutil.copy(/home/sky/Projects/test.txt", "D:\\folder")
-
 with open('/home/sky/Projects/Settings/git_links', 'r') as file:
     links_list = list(filter(lambda x: x != "" and x != " " and x.isspace, file.read().split('\n')))
 
