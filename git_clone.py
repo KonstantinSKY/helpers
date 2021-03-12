@@ -26,11 +26,17 @@ else:
     print("Link not found in list !!!\n")
     link = input('Enter the SSH link of repository and PUSH any key...\n')
 
-print('\n Your choise: ', link)
-directory = link[link.find('/'):-4]
-print(f'\nWill be created new and working directory: {os.getcwd()}{directory}')
-# os.system(f' git clone {link}')
+print('\n Your choice is: ', link)
+directory = os.getcwd() + link[link.find('/'):-4]
+print(f'\nWill be created new and working directory: {directory}')
+if os.path.exists(directory):
+    input(f'{directory} in exists. It will be rename to {directory}_old. Push any key to confirm')
+    os.rename(directory, directory+'_old')
+    print('\nRenamed...', link)
+
+print(f'\nCloning the repository to working directory: {directory}')
+os.system(f' git clone {link}')
 
 print("Done")
-print("Installed!")
+print("Remember to add files for setup working directory")
 
