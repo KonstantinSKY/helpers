@@ -3,6 +3,7 @@ import os
 import sys
 import subprocess
 
+
 # just system command
 def bash(command):
     print("System command: ")

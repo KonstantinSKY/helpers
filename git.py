@@ -1,13 +1,8 @@
 # Helper for git, to use it quickly
 
+from os_wrapper import bash, subproc
 import os
 import sys
-import subprocess
-
-
-def bash(command):
-    print('\033[92m ' + command + "\033[0m")
-    os.system(command)
 
 
 def delete():
@@ -40,25 +35,25 @@ def commit(msg=None):
         bash(f'git commit -m "Deleting file: {msg}"')
 
 
-print("-" * 100)
-print(" -= GIT helper =-")
-directory = os.path.abspath(os.curdir)
-print("Path for Git:", directory)
-print("-" * 100)
+if __name__ == "__main__":
+    print("-" * 100)
+    print(" -= GIT helper =-")
+    directory = os.path.abspath(os.curdir)
+    print("Path for Git:", directory)
+    print("-" * 100)
 
-p = str(subprocess.check_output("git status", shell=True)).lstrip("'b/'").rstrip("'").replace("\\n", "\n") \
-    .replace("\\t", "\t").replace("\\'", "\'")
-print(p)
-if p.find("working tree clean") >= 0:
-    print("WORKING TREE IS CLEAN!! QUIT")
-    quit()
+    p = subproc("git status").replace("\\n", "\n").replace("\\t", "\t").replace("\\'", "\'")
+    print(p)
+    if p.find("working tree clean") >= 0:
+        print("WORKING TREE IS CLEAN!! QUIT")
+        quit()
 
-print("-" * 100)
+    print("-" * 100)
 
-if len(sys.argv) == 2 and sys.argv[1] == 'del':
-    delete()
-else:
-    add()
+    if len(sys.argv) == 2 and sys.argv[1] == 'del':
+        delete()
+    else:
+        add()
 
-bash('git push')
-bash('git status')
+    bash('git push')
+    bash('git status')

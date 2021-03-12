@@ -1,5 +1,7 @@
 # Util for git clone and add necessary files
+from os_wrapper import bash
 import os
+import shutil
 
 print('\n -= Util for git clone and add necessary files =- \n')
 print(f'Working directory will be created right here:{os.getcwd()}\n')
@@ -29,8 +31,10 @@ if os.path.exists(directory):
     print('\nRenamed...', link)
 
 print(f'\nCloning the repository to working directory: {directory}')
-os.system(f' git clone {link}')
+bash(f' git clone {link}')
 
+print("copying .gitignore")
+shutil.copy(directory+'/../Settings/,gitignore_template', directory+'/.gitignore')
 print("Done")
-print("Remember to add files for setup working directory")
+print("les for setup working directory")
 
