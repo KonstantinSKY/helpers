@@ -37,7 +37,7 @@ def commit(msg=None):
 
 if __name__ == "__main__":
     print("-" * 100)
-    print(" -= GIT helper =- ")
+    print(" -= GIT helper =-")
     directory = os.path.abspath(os.curdir)
     print("Path for Git:", directory)
     print("-" * 100)
