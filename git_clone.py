@@ -26,15 +26,20 @@ print('\n Your choice is:', link)
 directory = os.getcwd() + link[link.find('/'):-4]
 print(f'\nWill be created new and working directory: {directory}')
 if os.path.exists(directory):
-    input(f'{directory} in exists. It will be rename to {directory}_old. Push any key to confirm')
+    input(f'{directory} is exists. It will be rename to {directory}_old. Push any key to confirm')
     os.rename(directory, directory+'_old')
     print('\nRenamed...', link)
 
 print(f'\nCloning the repository to working directory: {directory}')
 bash(f' git clone {link}')
 
-print("copying .gitignore")
-shutil.copy(directory+'/../Settings/,gitignore_template', directory+'/.gitignore')
+print("Copying .gitignore...")
+gitignore_template = '/home/sky/Projects/Settings/gitignore_template'
+if os.path.exists(gitignore_template):
+    shutil.copy('/home/sky/Projects/Settings/gitignore_template', directory+'/.gitignore')
+else:
+    print("gitignore_template not found and will not copy!!")
+
 print("Done")
-print("les for setup working directory")
+
 
