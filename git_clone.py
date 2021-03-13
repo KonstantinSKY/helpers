@@ -3,10 +3,15 @@ from os_wrapper import bash
 import os
 import shutil
 
+home_dir = os.path.expanduser("~")+'/'
+settings_dir = home_dir + "Projects/Settings/"
+
 print('\n -= Util for git clone and add necessary files =- \n')
+
+
 print(f'Working directory will be created right here:{os.getcwd()}\n')
 
-with open('/home/sky/Projects/Settings/git_links', 'r') as file:
+with open(settings_dir+'git_links', 'r') as file:
     links_list = list(filter(lambda x: x != "" and x != " " and x.isspace, file.read().split('\n')))
 
 print("Select NUMBER of SSH git link for make the repo clone \n")
@@ -35,11 +40,19 @@ print(f'\nCloning the repository to working directory: {directory}')
 bash(f' git clone {link}')
 
 print("Copying .gitignore...")
-gitignore_template = '/home/sky/Projects/Settings/gitignore_template'
+gitignore_template = settings_dir + 'gitignore_template'
 if os.path.exists(gitignore_template):
-    shutil.copy('/home/sky/Projects/Settings/gitignore_template', directory+'/.gitignore')
+    shutil.copy(gitignore_template, directory+'/.gitignore')
 else:
     print("gitignore_template not found and will not copy!!")
+
+print("Copying requirements.txt...")
+
+requirements = settings_dir + 'requirements.txt'
+if os.path.exists(gitignore_template):
+    shutil.copy(requirements, directory+'/requirements.txt')
+else:
+    print("requirements not found and will not copy!!")
 
 print("Done")
 
