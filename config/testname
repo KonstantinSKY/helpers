@@ -1,5 +1,5 @@
 ### Config file for testname. Created automatically.
 
 [DEFAULT]
-TestSettings = NO
+TestSettings = YES
 
