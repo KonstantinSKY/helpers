@@ -1,3 +1,5 @@
+"""helper for configuring"""
+
 from configparser import ConfigParser
 import os
 
