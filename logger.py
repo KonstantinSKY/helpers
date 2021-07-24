@@ -3,70 +3,88 @@
 import logging
 from config import Conf
 
-default_config = {
-    'AllLogs': True,
-    'InfoLogs': True,
-    'ErrorLogs': True,
-    'WarningLogs': True,
-    'Printing': True
+default_logs = {
+    'AllLogs': 'YES',
+    'InfoLogs': 'YES',
+    'ErrorLogs': 'YES',
+    'WarningLogs': 'YES',
+    'AllPrint': 'YES',
+    'InfoPrint': 'YES',
+    'ErrorPrint': 'YES',
+    'WarningPrint': 'YES',
     }
 
-config = Conf(__file__)
-config.chk_add_key_data('ALL_MODULES_LOGS', default_config)
+path = "../logs/"
+
+glob_config = Conf(__file__)
+# if 'ALL_MODULES_LOGS' in glob_config:
+#     print(glob_config.sections())
+glob_config.chk_add_key_data('ALL_MODULES_LOGS', default_logs)
+glob_conf = glob_config['ALL_MODULES_LOGS']
+print(glob_conf['AllLogs'])
 
 Green = '\033[92m'
 Red = '\033[91m'
 Styles_end = '\033[0m'
 
 
-class Logger():
+class Logger:
     def __init__(self, name):
+        self.info_logger = None
+        self.err_logger = None
+        self.warn_logger = None
 
-        self.err_logger = logging.getLogger(f'err_{name}')
-        self.info_logger = logging.getLogger(f'info_{name}')
+        config = Conf(name)
+        config.chk_add_key_data('LOGS', default_logs)
+        self.conf = config['LOGS']
 
-        self.err_logger.setLevel(logging.ERROR)
-        self.info_logger.setLevel(logging.INFO)
-
-        fh_err = logging.FileHandler(f"logs/err_{name}.log")
-        fh_info = logging.FileHandler(f"logs/info_{name}.log")
+        if glob_conf['AllLogs'].upper() == 'NO' or self.conf['AllLogs'].upper() == 'NO':
+            return
 
         formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-        fh_err.setFormatter(formatter)
-        fh_info.setFormatter(formatter)
 
-        self.err_logger.addHandler(fh_err)
-        self.info_logger.addHandler(fh_info)
+        if glob_conf['InfoLogs'].upper() == "YES" and self.conf['InfoLogs'].upper() == 'YES':
+            self.info_logger = logging.getLogger(f'info_{name}')
+            self.info_logger.setLevel(logging.INFO)
+            fh_info = logging.FileHandler(f"{path}info_{name}.log")
+            fh_info.setFormatter(formatter)
 
-        self.allow_log = True
-        self.allow_print = True
+        if glob_conf['ErrorLogs'].upper() == "YES" and self.conf['ErrorLogs'].upper() == 'YES':
+            self.err_logger = logging.getLogger(f'err_{name}')
+            self.err_logger.setLevel(logging.ERROR)
+            fh_err = logging.FileHandler(f"{path}err_{name}.log")
+            fh_err.setFormatter(formatter)
 
-    def prn_info(self, msg):
-        if self.allow_print:
-            print(f'{Green}{msg}{Styles_end}')
+        if glob_conf['WarningLogs'].upper() == "YES" and self.conf['WarningLogs'].upper() == 'YES':
+            self.warn_logger = logging.getLogger(f'warn_{name}')
+            self.warn_logger.setLevel(logging.WARNING)
+            fh_warn = logging.FileHandler(f"{path}warn_{name}.log")
+            fh_warn.setFormatter(formatter)
 
-    def prn_err(self, msg):
-        if self.allow_print:
-            print(f'{Red}{msg}{Styles_end}')
+    def print_log(self, message):
+        if glob_conf['AllPrint'].upper() == 'NO' or self.conf['AllPrint'].upper() == 'NO':
+            return
+        print(f'{message}{Styles_end}')
 
-    def log_err(self, msg):
-        if self.allow_log:
-            self.err_logger.error(msg)
-
-    def log_info(self, msg):
-        if self.allow_log:
+    def info(self, msg):
+        if glob_conf['InfoPrint'].upper() == "YES" and self.conf['InfoPrint'].upper() == 'YES':
+            self.print_log(f'{Green}{msg}')
+        if self.info_logger is not None:
             self.info_logger.info(msg)
 
-    def prn_log_err(self, msg):
-        self.log_err(msg)
-        self.prn_err(msg)
+    def err(self, msg):
+        if glob_conf['ErrorPrint'].upper() == "YES" and self.conf['ErrorPrint'].upper() == 'YES':
+            self.print_log(f'{Red}{msg}')
+        if self.err_logger is not None:
+            self.err_logger.error(msg)
 
-    def prn_log_info(self, msg):
-        self.log_info(msg)
-        self.prn_info(msg)
+    def warn(self, msg):
+        if glob_conf['WarningPrint'].upper() == "YES" and self.conf['WarningPrint'].upper() == 'YES':
+            self.print_log(f'{Green}{msg}')
+        if self.warn_logger is not None:
+            self.warn_logger.warning(msg)
 
 
 if __name__ == "__main__":
     log = Logger(__name__)
-    log.prn_log_info('Green')
-    log.prn_log_err('Red')
+    log.info('test message')
