@@ -1,5 +1,5 @@
 # Util for renew my aliases data
-from os_wrapper import bash
+from os_wrap import bash
 from os.path import expanduser
 
 

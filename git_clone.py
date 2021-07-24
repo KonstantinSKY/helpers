@@ -1,5 +1,5 @@
 # Util for git clone and add necessary files
-from os_wrapper import bash
+from os_wrap import bash
 import os
 import shutil
 

@@ -1,5 +1,5 @@
 # Util for install needed python modules
-from os_wrapper import bash
+from os_wrap import bash
 
 input('-= Util for install needed python modules. Push any key. =-')
 

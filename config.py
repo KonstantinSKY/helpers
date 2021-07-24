@@ -2,7 +2,7 @@
 
 from configparser import ConfigParser
 import os
-import os_wrapper
+import os_wrap
 
 ConfigDirPath = 'config'
 
@@ -13,7 +13,7 @@ class Conf(ConfigParser):
         self.optionxform = str
         self.path = ConfigDirPath+'/'+os.path.basename(name).split('.')[0]+'.conf'
 
-        os_wrapper.check_create_dir(ConfigDirPath)
+        os_wrap.check_create_dir(ConfigDirPath)
 
         if not os.path.exists(self.path) or not os.path.isfile(self.path):
             print('Config file '+self.path+' not found. It will be created automatically. ')

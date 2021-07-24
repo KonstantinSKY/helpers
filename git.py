@@ -1,6 +1,6 @@
 # Helper for git, to use it quickly
 
-from os_wrapper import bash, subproc
+from os_wrap import bash, subproc
 import os
 import sys
 
