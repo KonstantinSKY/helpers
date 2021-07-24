@@ -15,10 +15,9 @@ default_logs = {
     }
 
 path = "logs/"
+format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 
 glob_config = Conf(__file__)
-# if 'ALL_MODULES_LOGS' in glob_config:
-#     print(glob_config.sections())
 glob_config.chk_add_key_data('ALL_MODULES_LOGS', default_logs)
 glob_conf = glob_config['ALL_MODULES_LOGS']
 print(glob_conf['AllLogs'])
@@ -27,6 +26,19 @@ Green = '\033[92m'
 Yellow = '\033[93m'
 Red = '\033[91m'
 Styles_end = '\033[0m'
+
+"""TODO 
+Вынести проврку директории и файлов в отдельный хелпер
+fh вынести в отдельнуж функцию
+"""
+
+
+def create_logger(unit_name, log_type):
+    logger = logging.getLogger(f'{log_type}_{unit_name}')
+    fh = logging.FileHandler(f"{path}{log_type}_{unit_name}.log")
+    fh.setFormatter(logging.Formatter(format))
+    logger.addHandler(fh)
+    return logger
 
 
 class Logger:
@@ -42,31 +54,17 @@ class Logger:
         if glob_conf['AllLogs'].upper() == 'NO' or self.conf['AllLogs'].upper() == 'NO':
             return
 
-        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-
         if glob_conf['InfoLogs'].upper() == "YES" and self.conf['InfoLogs'].upper() == 'YES':
-            self.info_logger = logging.getLogger(f'info_{name}')
+            self.info_logger = create_logger(name, 'info')
             self.info_logger.setLevel(logging.INFO)
 
-            fh_info = logging.FileHandler(f"{path}info_{name}.log")
-            fh_info.setFormatter(formatter)
-            self.info_logger.addHandler(fh_info)
-
         if glob_conf['ErrorLogs'].upper() == "YES" and self.conf['ErrorLogs'].upper() == 'YES':
-            self.err_logger = logging.getLogger(f'err_{name}')
+            self.err_logger = create_logger(name, 'err')
             self.err_logger.setLevel(logging.ERROR)
 
-            fh_err = logging.FileHandler(f"{path}err_{name}.log")
-            fh_err.setFormatter(formatter)
-            self.err_logger.addHandler(fh_err)
-
         if glob_conf['WarningLogs'].upper() == "YES" and self.conf['WarningLogs'].upper() == 'YES':
-            self.warn_logger = logging.getLogger(f'warn_{name}')
+            self.warn_logger = create_logger(name, 'warn')
             self.warn_logger.setLevel(logging.WARNING)
-
-            fh_warn = logging.FileHandler(f"{path}warn_{name}.log")
-            fh_warn.setFormatter(formatter)
-            self.warn_logger.addHandler(fh_warn)
 
     def print_log(self, message):
         if glob_conf['AllPrint'].upper() == 'NO' or self.conf['AllPrint'].upper() == 'NO':
@@ -95,4 +93,6 @@ class Logger:
 
 if __name__ == "__main__":
     log = Logger(__name__)
-    log.info('test message')
+    log.info('INFO_NEW test message')
+    log.err('ERR_NEW test message')
+    log.warn('WARN_NEW test message')
