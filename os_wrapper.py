@@ -18,6 +18,16 @@ def subproc(command):
     return str(subprocess.check_output(command, shell=True)).lstrip("'b/'").rstrip("'")
 
 
+# Checking for Directory existing and create if not exist
+
+def check_create_dir(path):
+    if not os.path.exists(path) or not os.path.isdir(path):
+        print(f'{path} - directory not found. It will be created automatically.')
+        os.mkdir(path)
+        return True
+
+
+
 if __name__ == "__main__":
     bash('ls')
     print(subproc('ls -la'))

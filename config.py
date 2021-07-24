@@ -2,6 +2,7 @@
 
 from configparser import ConfigParser
 import os
+import os_wrapper
 
 ConfigDirPath = 'config'
 
@@ -12,9 +13,7 @@ class Conf(ConfigParser):
         self.optionxform = str
         self.path = ConfigDirPath+'/'+os.path.basename(name).split('.')[0]+'.conf'
 
-        if not os.path.exists(ConfigDirPath) or not os.path.isdir(ConfigDirPath):
-            print('Config directory not found. It will be created automatically.')
-            os.mkdir(ConfigDirPath)
+        os_wrapper.check_create_dir(ConfigDirPath)
 
         if not os.path.exists(self.path) or not os.path.isfile(self.path):
             print('Config file '+self.path+' not found. It will be created automatically. ')
@@ -25,11 +24,11 @@ class Conf(ConfigParser):
 
         self.read(self.path)
 
-    def save(self):
+    def save(self):                             # save config to file
         with open(self.path, "w+") as file:
             self.write(file)
 
-    def chk_add_key_data(self, key: str, data: dict):
+    def chk_add_key_data(self, key: str, data: dict):   # check and add options to keq if necessary
         if key not in self:
             self[key] = data
             self.save()
@@ -42,13 +41,15 @@ class Conf(ConfigParser):
 
 
 if __name__ == "__main__":
-    print("test2")
-    configg = Conf('testname.py')
-    print(os.getcwd())
-    configg.read('config/testname')
-    print(configg)
+    print("test for config module")
+    config = Conf('testname.py')
+    config.read(f'{ConfigDirPath}/testname')
+    print(config)
 
-    print(configg['DEFAULT']['TestSettings'])
-    # for key in configg:
-    #     print(key)
-    configg.chk_add_key_data('LOGGER', {'dfsd': 'sdfsdf'})
+    print('TestSetting:', config['DEFAULT']['TestSettings'])
+
+    print('all keys in config:')
+    for key in config:
+        print(key)
+
+    config.chk_add_key_data('LOGGER', {'dfsd': 'sdfsdf'})
